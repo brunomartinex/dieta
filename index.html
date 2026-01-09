@@ -5,14 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#000000">
     <link rel="apple-touch-icon" href="https://placehold.co/180x180/007AFF/ffffff.png?text=Fit+AI">
-    <title>FitTracker Dark</title>
+    <title>FitTracker Final</title>
     <style>
-        /* --- SISTEMA DE CORES (CLARO/ESCURO) --- */
+        /* --- DESIGN SYSTEM (Modo Escuro/Claro Automático) --- */
         :root {
             color-scheme: light dark;
-            
-            /* Cores Base (Modo Claro - Default) */
             --primary: #007AFF;
             --burn: #FF9500;
             --bg: #F2F2F7;
@@ -27,111 +26,82 @@
             --stat-box: #f9f9f9;
         }
 
-        /* Cores Modo Escuro (Ativa automaticamente se o iPhone estiver em Dark Mode) */
         @media (prefers-color-scheme: dark) {
             :root {
-                --bg: #000000;       /* Preto OLED */
-                --card: #1C1C1E;     /* Cinza Escuro iOS */
+                --bg: #000000;
+                --card: #1C1C1E;
                 --text: #FFFFFF;
                 --text-sec: #98989D;
                 --border: #38383A;
                 --input-bg: #2C2C2E;
                 --nav-bg: rgba(30,30,30,0.95);
                 --stat-box: #2C2C2E;
-                --bg-input: #1C1C1E;
             }
         }
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg);
-            margin: 0;
-            padding: 20px;
-            padding-bottom: 110px;
-            color: var(--text);
-            -webkit-tap-highlight-color: transparent;
-            transition: background-color 0.3s, color 0.3s;
+            margin: 0; padding: 20px; padding-bottom: 110px;
+            color: var(--text); -webkit-tap-highlight-color: transparent;
         }
 
         h1, h2, h3 { margin-top: 0; }
-        
-        .card {
-            background: var(--card);
-            border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        }
-
-        .flex-row { display: flex; justify-content: space-between; align-items: center; }
-        .text-center { text-align: center; }
         .hidden { display: none !important; }
+        .flex-row { display: flex; justify-content: space-between; align-items: center; }
+        
+        /* Cards */
+        .card {
+            background: var(--card); border-radius: 16px; padding: 20px;
+            margin-bottom: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
 
-        /* Inputs ajustados para Dark Mode */
+        /* Inputs & Botões */
         input, select, button, textarea {
-            width: 100%;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid var(--border);
-            background-color: var(--input-bg);
-            color: var(--text);
-            font-size: 16px;
-            margin-bottom: 10px;
-            box-sizing: border-box;
-            font-family: inherit;
+            width: 100%; padding: 15px; border-radius: 12px;
+            border: 1px solid var(--border); background-color: var(--input-bg);
+            color: var(--text); font-size: 16px; margin-bottom: 10px;
+            box-sizing: border-box; font-family: inherit;
         }
         
-        /* Remove estilo padrão do date picker no iOS para aceitar cores */
-        input[type="date"] {
-            background-color: var(--input-bg);
-            color: var(--text);
-            -webkit-appearance: none;
-            min-height: 52px; /* Altura fixa para iOS */
-        }
+        /* Correção para Data no iOS */
+        input[type="date"] { -webkit-appearance: none; min-height: 50px; text-align: center; }
 
         button.primary { background-color: var(--primary); color: white; border: none; font-weight: 600; cursor: pointer; }
         button.burn-btn { background-color: var(--burn); color: white; border: none; font-weight: 600; cursor: pointer; }
-        button.ai-btn { background: linear-gradient(135deg, #AF52DE, #5856D6); color: white; border: none; font-weight: 600; }
-        
-        /* Date Picker Area */
+        button.ai-btn { background: linear-gradient(135deg, #AF52DE, #5856D6); color: white; border: none; font-weight: 600; cursor: pointer; }
+        button:active { opacity: 0.8; }
+
+        /* Navegador Data */
         .date-navigator {
             display: flex; align-items: center; justify-content: space-between;
-            background: var(--card); 
-            padding: 10px; border-radius: 12px; margin-bottom: 20px; font-weight: bold;
+            background: var(--card); padding: 10px; border-radius: 12px; margin-bottom: 20px;
         }
         .date-navigator button { width: auto; margin: 0; padding: 5px 15px; background: none; border: none; color: var(--primary); font-size: 20px; }
 
-        /* Stats Grid */
+        /* Stats */
         .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 15px; }
         .stat-box { background: var(--stat-box); padding: 10px; border-radius: 12px; text-align: center; border: 1px solid var(--border); }
         .stat-value { font-size: 20px; font-weight: bold; color: var(--primary); }
         .stat-label { font-size: 11px; color: var(--text-sec); text-transform: uppercase; }
-        
         .val-burn { color: var(--burn) !important; }
-        
+
         /* Lista */
         ul { list-style: none; padding: 0; }
         li {
-            background: var(--card); 
-            border-bottom: 1px solid var(--border); 
-            padding: 15px 0;
-            display: flex; justify-content: space-between; align-items: center;
+            background: var(--card); border-bottom: 1px solid var(--border);
+            padding: 15px 0; display: flex; justify-content: space-between; align-items: center;
         }
-        li.type-exercise { 
-            background: var(--card);
-            border-left: 3px solid var(--burn); 
-            padding-left: 10px; 
-        }
+        li.type-exercise { border-left: 3px solid var(--burn); padding-left: 10px; }
 
-        /* Nav */
+        /* Menu Fixo */
         .nav-bar {
             position: fixed; bottom: 0; left: 0; width: 100%;
-            background: var(--nav-bg); 
-            backdrop-filter: blur(10px);
+            background: var(--nav-bg); backdrop-filter: blur(10px);
             border-top: 1px solid var(--border);
-            display: flex; justify-content: space-around; padding: 12px 0 25px 0; z-index: 100;
+            display: flex; justify-content: space-around; padding: 12px 0 25px 0; z-index: 999;
         }
-        .nav-item { color: var(--text-sec); font-size: 11px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center;}
+        .nav-item { color: var(--text-sec); font-size: 11px; text-align: center; cursor: pointer; display: flex; flex-direction: column; align-items: center; }
         .nav-item span { font-size: 20px; margin-bottom: 2px; }
         .nav-item.active { color: var(--primary); font-weight: bold; }
     </style>
@@ -141,15 +111,12 @@
     <div id="page-diary" class="page">
         <div class="date-navigator">
             <button onclick="changeDate(-1)">&#9664;</button>
-            <input type="date" id="date-picker" style="text-align:center; font-weight:bold; width:auto; margin:0;" onchange="loadDay()">
+            <input type="date" id="date-picker" onchange="loadDay()">
             <button onclick="changeDate(1)">&#9654;</button>
         </div>
 
         <div class="card">
-            <div class="flex-row">
-                <h2>Balanço do Dia</h2>
-            </div>
-            
+            <h2>Balanço do Dia</h2>
             <div class="stat-grid">
                 <div class="stat-box">
                     <div class="stat-value" id="day-cals">0</div>
@@ -160,9 +127,8 @@
                     <div class="stat-label">Treino (-)</div>
                 </div>
             </div>
-            
-            <div style="background:var(--stat-box); padding:10px; border-radius:12px; text-align:center; margin-top:5px; border: 1px solid var(--border);">
-                <span style="font-size:12px; color:var(--text-sec);">Saldo Líquido (Ingerido - Treino)</span><br>
+            <div style="background:var(--stat-box); padding:10px; border-radius:12px; text-align:center; margin-top:5px; border:1px solid var(--border);">
+                <span style="font-size:12px; color:var(--text-sec);">Saldo Líquido</span><br>
                 <strong style="font-size:24px;" id="day-net">0</strong> <small>kcal</small>
             </div>
         </div>
@@ -170,14 +136,14 @@
         <div class="card" style="border: 1px solid var(--ai-color);">
             <h3 style="color: var(--ai-color);">✨ IA (Comida)</h3>
             <textarea id="ai-input" rows="1" placeholder="Ex: Bife com arroz"></textarea>
-            <button class="ai-btn" id="btn-ask" onclick="askAI()">Registar Comida</button>
+            <button class="ai-btn" id="btn-ask" onclick="askAI()">Registar</button>
             <div id="loading-msg" class="hidden text-center" style="font-size:11px; color:var(--text-sec); margin-top:5px;">A processar...</div>
         </div>
 
         <div class="card" style="border: 1px solid var(--burn);">
             <h3 style="color: var(--burn);">🏃‍♂️ Registar Treino</h3>
             <div class="flex-row" style="gap:10px;">
-                <input type="text" id="ex-name" placeholder="Ex: Corrida" style="flex:2;">
+                <input type="text" id="ex-name" placeholder="Ex: Musculação" style="flex:2;">
                 <input type="number" id="ex-min" placeholder="Min" style="flex:1;">
             </div>
             <input type="number" id="ex-cals" placeholder="Calorias Ativas (ex: 300)">
@@ -185,7 +151,7 @@
         </div>
 
         <div class="card">
-            <h3>Diário de Registos</h3>
+            <h3>Registos</h3>
             <ul id="daily-list"></ul>
         </div>
     </div>
@@ -193,13 +159,11 @@
     <div id="page-stats" class="page hidden">
         <div class="card">
             <h2>Relatório Semanal</h2>
-            <p style="font-size:13px; color:var(--text-sec); margin-bottom:20px;">Análise dos últimos 7 dias.</p>
-
-            <div class="stat-box" style="margin-bottom:15px; border-color: var(--primary);">
+            <p style="font-size:13px; color:var(--text-sec);">Média dos últimos 7 dias.</p>
+            <div class="stat-box" style="margin-bottom:15px; border: 2px solid var(--primary);">
                 <div class="stat-value" id="week-loss-est">-- kg</div>
                 <div class="stat-label">Estimativa Perda Peso</div>
             </div>
-            
             <div class="stat-grid">
                 <div class="stat-box">
                     <div class="stat-value" id="week-avg-in">0</div>
@@ -210,32 +174,25 @@
                     <div class="stat-label">Média Treino</div>
                 </div>
             </div>
-             <div class="stat-box" style="margin-top:10px;">
-                <div class="stat-value" id="week-avg-net">0</div>
-                <div class="stat-label">Saldo Médio Real</div>
-            </div>
         </div>
     </div>
 
     <div id="page-profile" class="page hidden">
         <div class="card">
-            <h2>Configuração TDEE</h2>
+            <h2>Os teus Dados</h2>
             <p style="font-size:12px; color:var(--danger); background:rgba(255,59,48,0.1); padding:10px; border-radius:8px;">
-                <strong>DICA:</strong> Se registares os treinos manualmente, define a Atividade como <strong>"Sedentário"</strong> aqui.
+                Dica: Define como "Sedentário" se registas os treinos manualmente.
             </p>
-            
-            <label>Género:</label>
-            <select id="user-gender"><option value="male">Homem</option><option value="female">Mulher</option></select>
-
-            <label>Idade:</label>
-            <input type="number" id="user-age">
-
-            <label>Altura (cm):</label>
-            <input type="number" id="user-height">
-            
-            <label>Peso (kg):</label>
-            <input type="number" id="user-weight">
-            
+            <label>Género / Idade:</label>
+            <div class="flex-row" style="gap:10px">
+                <select id="user-gender"><option value="male">Homem</option><option value="female">Mulher</option></select>
+                <input type="number" id="user-age" placeholder="Idade">
+            </div>
+            <label>Altura / Peso:</label>
+            <div class="flex-row" style="gap:10px">
+                <input type="number" id="user-height" placeholder="cm">
+                <input type="number" id="user-weight" placeholder="kg">
+            </div>
             <label>Nível de Atividade:</label>
             <select id="user-activity">
                 <option value="1.2">Sedentário (Trabalho escritório)</option>
@@ -243,7 +200,6 @@
                 <option value="1.55">Moderado (3-5 dias)</option>
                 <option value="1.725">Muito Ativo (6-7 dias)</option>
             </select>
-
             <button class="primary" onclick="saveProfile()">Guardar Perfil</button>
         </div>
 
@@ -262,18 +218,19 @@
     </div>
 
     <script>
-        // --- DADOS V4 (Mantém compatibilidade com a tua base de dados) ---
+        // --- CÓDIGO RESTAURADO DA VERSÃO 4 (Funcional) ---
         let currentDate = new Date().toISOString().split('T')[0];
+        // Mantemos 'fit_data_v4' para não perderes os dados que já tinhas
         let allData = JSON.parse(localStorage.getItem('fit_data_v4')) || {}; 
         let user = JSON.parse(localStorage.getItem('fit_user_v4')) || { gender:'male', age:30, height:175, weight:75, activity:1.2 };
         let apiKey = localStorage.getItem('fit_api_key') || '';
 
+        // Inicia a app
         document.getElementById('date-picker').value = currentDate;
         loadProfileUI();
         loadDay();
         updateKeyStatus();
 
-        // --- NAVEGAÇÃO ---
         function switchPage(page) {
             document.querySelectorAll('.page').forEach(p => p.classList.add('hidden'));
             document.getElementById('page-' + page).classList.remove('hidden');
@@ -291,7 +248,6 @@
             loadDay();
         }
 
-        // --- CORE: CARREGAR DIA ---
         function loadDay() {
             currentDate = document.getElementById('date-picker').value;
             if(!allData[currentDate]) allData[currentDate] = { meals: [], exercises: [] };
@@ -303,35 +259,23 @@
             let totalFood = 0;
             let totalBurn = 0;
 
-            // Render Refeições
+            // Listar Comida
             dayData.meals.forEach((meal, idx) => {
                 totalFood += meal.cals;
                 list.innerHTML += `
                 <li>
-                    <div>
-                        <strong>${meal.name}</strong><br>
-                        <small style="color:var(--text-sec)">🍽️ Comida</small>
-                    </div>
-                    <div style="text-align:right">
-                        <strong>+${meal.cals}</strong> kcal
-                        <button onclick="deleteItem('meal', ${idx})" style="color:var(--danger); border:none; background:none;">&times;</button>
-                    </div>
+                    <div><strong>${meal.name}</strong><br><small style="color:var(--text-sec)">🍽️ Comida</small></div>
+                    <div style="text-align:right"><strong>+${meal.cals}</strong> kcal <button onclick="deleteItem('meal', ${idx})" style="color:var(--danger); border:none; background:none; font-size:18px;">&times;</button></div>
                 </li>`;
             });
 
-            // Render Exercícios
+            // Listar Treino
             dayData.exercises.forEach((ex, idx) => {
                 totalBurn += parseInt(ex.cals);
                 list.innerHTML += `
                 <li class="type-exercise">
-                    <div>
-                        <strong>${ex.name}</strong><br>
-                        <small style="color:var(--burn)">🏃‍♂️ ${ex.mins} min</small>
-                    </div>
-                    <div style="text-align:right">
-                        <strong style="color:var(--burn)">-${ex.cals}</strong> kcal
-                        <button onclick="deleteItem('exercise', ${idx})" style="color:var(--danger); border:none; background:none;">&times;</button>
-                    </div>
+                    <div><strong>${ex.name}</strong><br><small style="color:var(--burn)">🏃‍♂️ ${ex.mins} min</small></div>
+                    <div style="text-align:right"><strong style="color:var(--burn)">-${ex.cals}</strong> kcal <button onclick="deleteItem('exercise', ${idx})" style="color:var(--danger); border:none; background:none; font-size:18px;">&times;</button></div>
                 </li>`;
             });
 
@@ -340,7 +284,6 @@
             document.getElementById('day-net').innerText = (totalFood - totalBurn);
         }
 
-        // --- AÇÕES ---
         function addExercise() {
             const name = document.getElementById('ex-name').value;
             const mins = document.getElementById('ex-min').value;
@@ -351,3 +294,112 @@
                 allData[currentDate].exercises.push({ name, mins, cals: parseInt(cals) });
                 saveData();
                 document.getElementById('ex-name').value = '';
+                document.getElementById('ex-min').value = '';
+                document.getElementById('ex-cals').value = '';
+                loadDay();
+            } else {
+                alert("Preenche o Nome e Calorias.");
+            }
+        }
+
+        async function askAI() {
+            if(!apiKey) { alert('Configura a API Key no Perfil.'); switchPage('profile'); return; }
+            const text = document.getElementById('ai-input').value;
+            if(!text) return;
+
+            const btn = document.getElementById('btn-ask');
+            const load = document.getElementById('loading-msg');
+            btn.disabled = true; load.classList.remove('hidden');
+
+            try {
+                const prompt = `Analisa comida: "${text}". JSON apenas: {"name": "nome curto", "cals": inteiro}`;
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+                    method: 'POST', headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+                });
+                const data = await res.json();
+                let txt = data.candidates[0].content.parts[0].text.replace(/```json|```/g, '').trim();
+                const meal = JSON.parse(txt);
+
+                if(!allData[currentDate]) allData[currentDate] = { meals: [], exercises: [] };
+                allData[currentDate].meals.push(meal);
+                saveData();
+                document.getElementById('ai-input').value = '';
+                loadDay();
+            } catch(e) { alert('Erro na IA.'); console.log(e); } 
+            finally { btn.disabled = false; load.classList.add('hidden'); }
+        }
+
+        function deleteItem(type, idx) {
+            if(confirm('Apagar item?')) {
+                if(type === 'meal') allData[currentDate].meals.splice(idx, 1);
+                else allData[currentDate].exercises.splice(idx, 1);
+                saveData();
+                loadDay();
+            }
+        }
+
+        function calculateStats() {
+            // TDEE Mifflin-St Jeor
+            let bmr = (10 * user.weight) + (6.25 * user.height) - (5 * user.age);
+            if(user.gender === 'male') bmr += 5; else bmr -= 161;
+            const tdeeBase = bmr * user.activity;
+
+            let sumFood = 0, sumBurn = 0, days = 0;
+            for(let i=0; i<7; i++) {
+                const d = new Date(); d.setDate(d.getDate() - i);
+                const k = d.toISOString().split('T')[0];
+                if(allData[k]) {
+                    days++;
+                    allData[k].meals.forEach(m => sumFood += m.cals);
+                    allData[k].exercises.forEach(e => sumBurn += parseInt(e.cals));
+                }
+            }
+            const div = days || 1;
+            const avgFood = Math.round(sumFood/div);
+            const avgBurn = Math.round(sumBurn/div);
+            
+            // Defice = (Gasto Basal + Treino Extra) - Comida
+            const deficit = (tdeeBase + avgBurn) - avgFood;
+            const weeklyLoss = (deficit * 7) / 7700;
+
+            const el = document.getElementById('week-loss-est');
+            if(weeklyLoss > 0) { el.innerText = "-" + weeklyLoss.toFixed(2) + " kg"; el.style.color = "#34C759"; }
+            else { el.innerText = "+" + Math.abs(weeklyLoss).toFixed(2) + " kg"; el.style.color = "#FF3B30"; }
+
+            document.getElementById('week-avg-in').innerText = avgFood;
+            document.getElementById('week-avg-burn').innerText = avgBurn;
+        }
+
+        function loadProfileUI() {
+            document.getElementById('user-gender').value = user.gender;
+            document.getElementById('user-age').value = user.age;
+            document.getElementById('user-height').value = user.height;
+            document.getElementById('user-weight').value = user.weight;
+            document.getElementById('user-activity').value = user.activity;
+            document.getElementById('api-key').value = apiKey;
+        }
+        function saveProfile() {
+            user.gender = document.getElementById('user-gender').value;
+            user.age = parseInt(document.getElementById('user-age').value);
+            user.height = parseInt(document.getElementById('user-height').value);
+            user.weight = parseFloat(document.getElementById('user-weight').value);
+            user.activity = parseFloat(document.getElementById('user-activity').value);
+            localStorage.setItem('fit_user_v4', JSON.stringify(user));
+            alert('Perfil Guardado!');
+        }
+        function saveKey() {
+            apiKey = document.getElementById('api-key').value.trim();
+            localStorage.setItem('fit_api_key', apiKey);
+            updateKeyStatus();
+            alert('Chave Guardada!');
+        }
+        function updateKeyStatus() {
+            const k = document.getElementById('key-status');
+            k.innerText = apiKey ? "✅ Ativa" : "❌ Em falta";
+            k.style.color = apiKey ? "green" : "red";
+        }
+        function saveData() { localStorage.setItem('fit_data_v4', JSON.stringify(allData)); }
+    </script>
+</body>
+</html>
